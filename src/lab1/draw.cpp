@@ -1,19 +1,16 @@
-#include <tuple>
 #include "draw.h"
 
-std::tuple<float, float> affine(float x, float y, float rotate, float shift_x, float shift_y, float scale) {
+void affine(float *x, float *y, float rotate, float shift_x, float shift_y, float scale) {
 
-    x *= scale;
-    y *= scale;
+    *x *= scale;
+    *y *= scale;
 
-    float tmp_x = x;
-    x = tmp_x * cos(rotate) + y * sin(rotate);
-    y = -tmp_x * sin(rotate) + y * cos(rotate);
+    float tmp_x = *x;
+    *x = tmp_x * cos(rotate) + *y * sin(rotate);
+    *y = -tmp_x * sin(rotate) + *y * cos(rotate);
 
-    x += shift_x;
-    y += shift_y;
-
-    return std::make_tuple(x, y);
+    *x += shift_x;
+    *y += shift_y;
 }
 
 void draw_limacon(SDL_Renderer *renderer, float a, float l, float rotate, float shift_x, float shift_y, float scale) {
@@ -23,7 +20,7 @@ void draw_limacon(SDL_Renderer *renderer, float a, float l, float rotate, float 
         float x = a * cos(t) * cos(t) + l * cos(t);
         float y = a * cos(t) * sin(t) + l * sin(t);
 
-        std::tie(x, y) = affine(x, y, rotate, shift_x, shift_y, scale);
+        affine(&x, &y, rotate, shift_x, shift_y, scale);
         SDL_RenderDrawPoint(renderer, static_cast<int>(x), static_cast<int>(y));
     }
 
