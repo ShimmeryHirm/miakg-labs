@@ -1,10 +1,8 @@
 #include "draw.h"
 #include <SDL.h>
-#include <stdio.h>
-#include <string>
-#include <cassert>
+#include <cstdio>
 #include <ctime>
-#include <iostream>
+
 
 bool init();
 
@@ -12,7 +10,6 @@ void close();
 
 SDL_Window *window = nullptr;
 SDL_Renderer *renderer = nullptr;
-SDL_Surface *loadedSurface = nullptr;
 
 
 bool init() {
